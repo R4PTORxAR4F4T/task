@@ -1,0 +1,27 @@
+.App {
+  text-align: center;
+  margin: 20px;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(9, 1fr);
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.tile {
+  padding: 20px;
+  border-radius: 15px;
+  background-color: #202020;
+  color: white;
+  text-align: center;
+  font-size: 24px;
+  cursor: pointer;
+  user-select: none;
+}
+
+#outputString {
+  font-size: 24px;
+  margin-top: 20px;
+}

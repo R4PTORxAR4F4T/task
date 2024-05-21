@@ -32,6 +32,10 @@
     </div>
 
     <script>
+
+        const initialColor = document.getElementById('container');
+        initialColor.style.backgroundColor = getRandomColor();
+
         function getRandomColor() {
             const letters = '0123456789ABCDEF';
             let color = '#';
