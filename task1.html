@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>task 1</title>
+    <style>
+        body, html {
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .partition {
+            position: relative;
+            border: 1px solid #000;
+            box-sizing: border-box;
+            display: flex;
+            flex-grow: 1;
+        }
+        .partition-buttons button {
+            margin: 2px;
+        }
+    </style>
+</head>
+<body>
+    <div id="container" class="partition">
+        <div class="partition-buttons">
+            <button onclick="splitVertical(this)">V</button>
+            <button onclick="splitHorizontal(this)">H</button>
+        </div>
+    </div>
+
+    <script>
+        function getRandomColor() {
+            const letters = '0123456789ABCDEF';
+            let color = '#';
+            for (let i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
+
+        function createPartitionElement() {
+            const partition = document.createElement('div');
+            partition.className = 'partition';
+            partition.style.backgroundColor = getRandomColor();
+            partition.innerHTML = `
+                <div class="partition-buttons">
+                    <button onclick="splitVertical(this)">V</button>
+                    <button onclick="splitHorizontal(this)">H</button>
+                    <button onclick="removePartition(this)">-</button>
+                </div>
+            `;
+            return partition;
+        }
+
+        function splitVertical(button) {
+            const parent = button.closest('.partition');
+            const parentColor = parent.style.backgroundColor;
+
+            parent.style.flexDirection = 'column';
+            parent.innerHTML = '';
+            
+            const firstChild = createPartitionElement();
+            firstChild.style.backgroundColor = parentColor;
+
+            const secondChild = createPartitionElement();
+
+            parent.appendChild(firstChild);
+            parent.appendChild(secondChild);
+        }
+
+        function splitHorizontal(button) {
+            const parent = button.closest('.partition');
+            const parentColor = parent.style.backgroundColor;
+
+            parent.style.flexDirection = 'row';
+            parent.innerHTML = '';
+
+            const firstChild = createPartitionElement();
+            firstChild.style.backgroundColor = parentColor;
+
+            const secondChild = createPartitionElement();
+
+            parent.appendChild(firstChild);
+            parent.appendChild(secondChild);
+        }
+
+        function removePartition(button) {
+            const partition = button.closest('.partition');
+            const parent = partition.parentElement;
+            parent.removeChild(partition);
+
+            if (parent.children.length === 1) {
+                const remainingChild = parent.children[0];
+                const grandparent = parent.parentElement;
+                grandparent.replaceChild(remainingChild, parent);
+                remainingChild.style.flex = '1';
+            }
+        }
+    </script>
+
+</body>
+</html>
+
